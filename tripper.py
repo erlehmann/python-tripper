@@ -15,12 +15,14 @@ def mktripcode(pw):
     trip = crypt.crypt(pw, salt)[-10:]
     return trip
 
-x = 0
-y = 0
-
-if len(sys.argv) != 2:
-    print "Tripper requires exactly one argument string that should be in the tripcode."
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    print "Tripper requires one or two arguments. First argument is the string that should be in the tripcode, second is the start value for brute-forcing."
     sys.exit()
+
+try:
+    x = int(sys.argv[2])
+except IndexError:
+    x = 0
 
 #mackie done: 34732252
 #4chan 38759849 48531118
@@ -28,9 +30,7 @@ if len(sys.argv) != 2:
 #sakaki 155400000
 while True:
     if re.search(sys.argv[1],string.lower(mktripcode(str(x))))>-1:
+        print x, ":", mktripcode(str(x))
+    elif x % 100000 == 0:
         print x
-        print '########### TRIPCODE ###########\n'+mktripcode(str(x))+'\n########### TRIPCODE ###########\n'
-    elif x==y:
-        print x
-        y=y+100000
-    x=x+1
+    x += 1
