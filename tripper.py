@@ -1,6 +1,14 @@
 #!/usr/bin/python
 import sys, re, string, crypt
 
+# Import Psyco if available
+try:
+    import psyco
+    psyco.full()
+    print "using Psyco"
+except ImportError:
+    pass
+
 def mktripcode(pw):
     pw = pw.decode('utf_8', 'ignore') \
         .encode('shift_jis', 'ignore')    \
